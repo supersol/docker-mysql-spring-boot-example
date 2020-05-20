@@ -19,7 +19,7 @@ Due to using only my local resources I found this way pretty convenient.
 
 Answers for further questions:
 
-####DB HA setup:
+### DB HA setup:
 
 The architecture of HA setup depends on overall db usage.  
 General strategy is to have master and multiple readers, where master will only do writes and do replication on reader,
@@ -31,15 +31,15 @@ In some cases might be wise to do switching manually
 
 In kubernetes ecosystem in can be done with for example 2 stateful sets: 1 for master, 1 for readers with multiple replicas baked with some scripts for monitoring/failover activities  
 
-####CI:
+### CI:
 
 We can create jenkins pipeline with some artifact building, unit tests, validation, dry-run of yaml templates also it can be more complex with additional checks depending on the CI process.    
 Automatically deploy service to testing environments, do whole cycle of tests(integration, stress, etc).  
 
-####Multi env deploy:
+### Multi env deploy:
 
 We can achieve this using namespaces in 1 cluster or if we have multiple clusters we can switch context for `kubectl` in jenkins job for example
 
-####Monitoring:
+### Monitoring:
 
 Prometheus managed by kubernetes prometheus-operator, grafana and alertmanager which can be intergrated with slack, opsgenie, etc.
