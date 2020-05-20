@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-db
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql-db
+  clusterIP: None
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql-db
+  serviceName: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql-db
+    spec:
+      containers:
+      - image: mysql:5.6
+        name: mysql-db
+        env:
+        - name: MYSQL_DATABASE
+          value: test
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-db
+              key: MYSQL_ROOT_PASSWORD
+        - name: MYSQL_USER
+          valueFrom:
+            secretKeyRef:
+              name: mysql-db
+              key: MYSQL_USER
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-db
+              key: MYSQL_PASSWORD
+        ports:
+        - containerPort: 3306
+          name: mysql-db
+        volumeMounts:
+          - name: mysql-data
+            mountPath: /var/lib/mysql
+  volumeClaimTemplates:
+    - metadata:
+        name: mysql-data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: local-storage
+        resources:
+          requests:
+            storage: 1Gi
