@@ -10,7 +10,7 @@ In elastic we can also use "elast alert" functionality
 4. Created `spring_app.yaml` with service, deployment for springboot application.  
 
 5. Created local `StorageClass`, `PersistentVolume`, `PersistentVolumeClaim`, `Secret` and `StatefulSet` for deploying mysql
-Respectful files: `sc.yaml`, `pv_sts.yaml`, `secrey.yaml`, `mysql_sts.yaml`  
+Respectful files: `sc.yaml`, `pv_sts.yaml`, `secret.yaml`, `mysql_sts.yaml`  
 Due to using only my local resources I found this way pretty convenient.
 
 6. Created `ns.yaml`, with namespaces in case multi env deployment  
